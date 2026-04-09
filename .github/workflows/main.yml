@@ -42,9 +42,8 @@ jobs:
           python-version: '3.x'
 
       - name: Install Trivy
-        run: |
-          curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sh -s -- -b /usr/local/bin
- SonarQube-scan:
+        run: curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sh -s -- -b /usr/local/bin
+  SonarQube-scan:
       runs-on: ubuntu-latest
       steps:
       - name: Checkout code
