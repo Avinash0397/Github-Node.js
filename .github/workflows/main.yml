@@ -44,7 +44,28 @@ jobs:
       - name: Install Trivy
         run: |
           curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sh -s -- -b /usr/local/bin
-
-      - name: Run Trivy Scan
+ SonarQube-scan:
+      runs-on: ubuntu-latest
+      steps:
+      - name: Checkout code
+        uses: actions/checkout@v4  
+      - name: SonarQube Scan
+        uses: sonarsource/sonarcloud-github-action@master
+        with:
+          projectBaseDir: './client'
+          args: >
+            -Dsonar.projectKey=your_project_key
+            -Dsonar.organization=your_organization
+            -Dsonar.sources=.
+            -Dsonar.exclusions=node_modules/**,dist/**,build/**
+            -Dsonar.host.url=${{ secrets.SONARHOST_URL }} 
+            -Dsonar.login=${{ secrets.SONAR_TOKEN }}
+          env:
+            SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }} 
+            SONAR_HOST_URL: ${{ secrets.SONARHOST_URL }} 
+       - name: Run Trivy Scan
         run: trivy fs --format json --output trivy-report.json ./client
+
+        
+         
 
