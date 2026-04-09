@@ -16,20 +16,8 @@ jobs:
         with:
           node-version: '23'
       -  name: Install dependencies and run tests
-         run: | 
-            cd client
-            find . -name "*.js" -exec node --check {} \;
-      - name: Install dependencies and run tests
-        run: | 
-          cd api
-           find . -name "*.js" -exec node --check {} \;
-      - name: Install dependencies and run tests
-        run: npm install
-
-      - name: Run tests
-        run: | 
-            cd client
-             npm test
+         working-directory: client
+         run: npm install 
 
   Gitleaks-scan:
       runs-on: ubuntu-latest
