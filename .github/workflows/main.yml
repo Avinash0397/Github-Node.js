@@ -63,6 +63,25 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }} 
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }} 
 
+  zap_scan:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Run ZAP Scan
+        run: |
+          docker run -t owasp/zap2docker-stable zap-baseline.py \
+            -t https://your-app-url.com \
+            -r zap-report.html
+
+      - name: Upload Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: zap-report
+          path: zap-report.html
+
 
         
          
