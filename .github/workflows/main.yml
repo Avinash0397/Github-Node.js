@@ -18,11 +18,11 @@ jobs:
       -  name: Install dependencies and run tests
          run: | 
             cd client
-            find . -name "*.js" -exec node --check {} *
+            find . -name "*.js" -exec node --check {} \;
       - name: Install dependencies and run tests
         run: | 
           cd api
-           find . -name "*.js" -exec node --check {} *
+           find . -name "*.js" -exec node --check {} \;
       - name: Install dependencies and run tests
         run: npm install
 
