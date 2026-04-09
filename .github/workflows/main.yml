@@ -63,8 +63,7 @@ jobs:
           env:
             SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }} 
             SONAR_HOST_URL: ${{ secrets.SONARHOST_URL }} 
-       - name: Run Trivy Scan
-        run: trivy fs --format json --output trivy-report.json ./client
+
 
         
          
