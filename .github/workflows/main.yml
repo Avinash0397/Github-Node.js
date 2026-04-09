@@ -72,7 +72,7 @@ jobs:
 
       - name: Run ZAP Scan
         run: |
-          docker run -t owasp/zap2docker-stable zap-baseline.py \
+          docker run -t owasp/dependency-check zap-baseline.py \
             -t https://your-app-url.com \
             -r zap-report.html
 
