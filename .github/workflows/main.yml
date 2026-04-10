@@ -21,6 +21,7 @@ jobs:
 
   Gitleaks-scan:
       runs-on: ubuntu-latest
+      needs: compile
       steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -32,6 +33,7 @@ jobs:
   
   Trivy-scan:
       runs-on: ubuntu-latest
+      needs: Gitleaks-scan
       steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -43,8 +45,10 @@ jobs:
 
       - name: Install Trivy
         run: curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sh -s -- -b /usr/local/bin
+        
   SonarQube-scan:
       runs-on: ubuntu-latest
+      needs: Trivy-scan
       steps:
       - name: Checkout code
         uses: actions/checkout@v4  
