@@ -18,32 +18,26 @@ jobs:
       -  name: Install dependencies and run tests
          working-directory: client
          run: npm install 
-         
-      - name: Archive production artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: dist-without-markdown
-          path: |
-            dist
-            !dist/**/*.md
-      - name: Archive code coverage results
-        uses: actions/upload-artifact@v4
-        with:
-          name: code-coverage-report
-          path: output/test/code-coverage.html
-      - name: 'Upload Artifact'
+      
+      - name: Build project
+        working-directory: client
+        run: npm run build
+      
+      - name: Verify build output
+        run: |
+          if [ -d "client/dist" ]; then
+            echo "dist folder exists"
+          else
+            echo "dist folder NOT found" && exit 1
+          fi
+      
+      - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
           name: my-artifact
-          path: my_file.txt
-          retention-days: 5
-      - name: Download a single artifact
-        uses: actions/download-artifact@v5
-        with:
-          name: my-artifact
-      - name: Download all workflow run artifacts
-        uses: actions/download-artifact@v5
-
+          path: client/dist
+                 
+     
   Gitleaks-scan:
       runs-on: ubuntu-latest
       steps:
